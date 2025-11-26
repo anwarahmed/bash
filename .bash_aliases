@@ -29,3 +29,6 @@ alias psm="ps uc --sort=-%mem"
 
 # Alias command 'psp' to show unique rnnning processes sorted by name
 alias psp="ps co comm | sort | uniq"
+
+# Alias command 'cm' to run cmatrix
+alias cm="cmatrix -abu 3"
