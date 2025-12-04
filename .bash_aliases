@@ -32,3 +32,6 @@ alias psp="ps co comm | sort | uniq"
 
 # Alias command 'cm' to run cmatrix
 alias cm="cmatrix -abu 3"
+
+# Alias command 'mx' to run unimatrix
+alias mx="unimatrix -a -b -f -s 95"
