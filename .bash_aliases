@@ -35,3 +35,6 @@ alias cm="cmatrix -abu 3"
 
 # Alias command 'mx' to run unimatrix, timing out after 15 minutes
 alias mx="unimatrix -a -b -f -s 95 -t 900"
+
+# Alias command 'lw' to run live-wallpaper-toggle
+alias lw="live-wallpaper-toggle"
