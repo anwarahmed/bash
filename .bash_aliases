@@ -8,14 +8,16 @@
 # Git
 alias ga='git add'
 alias gb='git branch'
+alias gbd='git branch -D'
 alias gc='git commit'
+alias gco='git checkout'
+alias gcob='git checkout -b'
 alias gd='git diff'
 alias gf='git fetch'
 alias gl='git pull'
 alias gp='git push'
 alias gr='git remote'
 alias gs='git status'
-alias gco='git checkout'
 alias gwt='git worktree'
 
 # Alias for 'la -la'
