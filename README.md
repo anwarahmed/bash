@@ -23,6 +23,6 @@ Create symbolic links for the files below to the home directory. Make a backup o
 
 ```sh
 ln -s ~/.config/bash/.bashrc ~/.bashrc
-ln -s ~/.config/bash/.bash_profile ~/.bashrc_profile
-ln -s ~/.config/bash/.bash_logout ~/.bashrc_logout
+ln -s ~/.config/bash/.bash_profile ~/.bash_profile
+ln -s ~/.config/bash/.bash_logout ~/.bash_logout
 ```
