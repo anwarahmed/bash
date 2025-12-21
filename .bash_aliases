@@ -43,4 +43,4 @@ alias mx="unimatrix -a -b -f -s 95 -t 900"
 alias lw="live-wallpaper-toggle"
 
 # Alias command 'crt' to run cool-retro-term in the background
-alias crt="(nohup cool-retro-term > /dev/null 2>&1 &)"
+alias crt="(cool-retro-term > /dev/null 2>&1 &)"
