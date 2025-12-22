@@ -9,6 +9,7 @@
 alias ga='git add'
 alias gb='git branch'
 alias gbd='git branch -D'
+alias gbr='git branch --remote'
 alias gc='git commit'
 alias gco='git checkout'
 alias gcob='git checkout -b'
