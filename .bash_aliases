@@ -7,12 +7,15 @@
 
 # Git
 alias ga='git add'
+alias ga.='git add . && git status'
 alias gb='git branch'
 alias gbd='git branch -D'
 alias gbr='git branch --remote'
 alias gc='git commit'
+alias gcm='git commit -m'
 alias gco='git checkout'
 alias gcob='git checkout -b'
+alias gcom='git checkout main'
 alias gd='git diff'
 alias gf='git fetch'
 alias gfp='git fetch -p'
