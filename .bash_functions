@@ -26,3 +26,12 @@ function cli() {
   clear
   info
 }
+
+# Function to checkout the main or master branch
+function git_checkout_main_or_master() {
+  if git show-ref -q --heads main; then
+    git checkout main
+  else
+    git checkout master
+  fi
+}
