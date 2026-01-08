@@ -7,6 +7,9 @@
 # (don't mess with these directly, just overwrite them here!)
 source ~/.local/share/omarchy/default/bash/rc
 
+# Default editor
+export EDITOR=nvim
+
 # Add ~/.local/bin to PATH
 export PATH="$HOME/.local/bin:$PATH"
 
