@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [ -f ~/.config/bash/.bashrc ] then
+if [ -f ~/.config/bash/.bashrc ]; then
   . ~/.config/bash/.bashrc
-elif [ -f ~/.bashrc ] then
+elif [ -f ~/.bashrc ]; then
   . ~/.bashrc
 fi
