@@ -1,0 +1,37 @@
+#!/bin/bash
+
+#
+# ~/.bash_logout
+#
+
+# Print a goodbye message with colors
+echo -en "\e[1;35m➜\e[0m"
+sleep 0.01
+echo -en "\e[1;35m \e[0m"
+sleep 0.01
+echo -en "\e[1;35m \e[0m"
+sleep 0.01
+echo -en "\e[1;31m.\e[0m"
+sleep 0.01
+echo -en "\e[1;31m.\e[0m"
+sleep 0.01
+echo -en "\e[1;31m.\e[0m"
+sleep 0.01
+echo -en "\e[1;31m.\e[0m"
+sleep 0.01
+echo -en "\e[1;31m.\e[0m"
+sleep 0.01
+echo -en "\e[1;31m.\e[0m"
+sleep 0.01
+echo -en "\e[1;31m.\e[0m"
+sleep 0.01
+echo -en "\e[1;31m.\e[0m"
+sleep 0.01
+echo -en "\e[1;31m.\e[0m"
+sleep 0.01
+echo -en "\e[1;31m.\e[0m"
+sleep 0.01
+echo -en "\e[1;31m.\e[0m"
+sleep 0.01
+echo -en "\e[1;31m.\e[0m"
+sleep 0.1
