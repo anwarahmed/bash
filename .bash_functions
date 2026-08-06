@@ -51,17 +51,29 @@ function git_checkout_main_or_master() {
 #
 # Requirements: pacman, yay (AUR helper), snapper, sudo privileges
 function clear-system-cache() {
+  local orphans
+
   # Clear official repo package cache (all versions, not just uninstalled)
-  sudo pacman -Scc --noconfirm --needed
+  sudo pacman -Scc --noconfirm
 
   # Remove orphaned packages (no longer required by any installed package)
-  sudo pacman -Rns $(pacman -Qdtq) --noconfirm --needed
+  orphans=$(pacman -Qdtq)
+  if [ -n "$orphans" ]; then
+    sudo pacman -Rns --noconfirm $orphans
+  else
+    echo "No orphaned packages to remove."
+  fi
 
   # Clear AUR package cache
-  yay -Scc --noconfirm --needed
+  yay -Scc --noconfirm
 
   # Remove orphaned AUR packages
-  yay -Rns $(yay -Qdtq) --noconfirm --needed
+  orphans=$(yay -Qdtq)
+  if [ -n "$orphans" ]; then
+    yay -Rns --noconfirm $orphans
+  else
+    echo "No orphaned AUR packages to remove."
+  fi
 
   # Wipe user application cache (~/.cache)
   rm -rf ~/.cache/*
