@@ -17,7 +17,7 @@ source ~/.config/bash/.bash_aliases
 source ~/.config/bash/.bash_functions
 
 # NVM
-source /usr/share/nvm/init-nvm.sh
+[ -f /usr/share/nvm/init-nvm.sh ] && source /usr/share/nvm/init-nvm.sh
 
 # Bash history
 export HISTTIMEFORMAT='%F %T - '             # History format
