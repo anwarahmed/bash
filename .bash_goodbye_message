@@ -16,7 +16,7 @@ function _bash_goodbye_message() {
   # Draw time is the dwell times the width, so the dots advance at one speed
   # whatever the terminal size -- a wide window takes proportionally longer
   # rather than racing to fit a fixed budget
-  local draw_us_per_col=2000 pause_ms=150
+  local draw_us_per_col=1500 pause_ms=150
 
   local cols dots frames fd smooth=0 delay us i target shown=0 pad discard
 
