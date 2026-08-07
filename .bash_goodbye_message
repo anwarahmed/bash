@@ -1,33 +1,87 @@
 #!/bin/bash
 
-# Print a goodbye message with colors
-echo -en "\e[1;35m➜\e[0m"
-sleep 0.01
-echo -en "\e[1;35m \e[0m"
-sleep 0.01
-echo -en "\e[1;35m \e[0m"
-sleep 0.01
-echo -en "\e[1;31m.\e[0m"
-sleep 0.01
-echo -en "\e[1;31m.\e[0m"
-sleep 0.01
-echo -en "\e[1;31m.\e[0m"
-sleep 0.01
-echo -en "\e[1;31m.\e[0m"
-sleep 0.01
-echo -en "\e[1;31m.\e[0m"
-sleep 0.01
-echo -en "\e[1;31m.\e[0m"
-sleep 0.01
-echo -en "\e[1;31m.\e[0m"
-sleep 0.01
-echo -en "\e[1;31m.\e[0m"
-sleep 0.01
-echo -en "\e[1;31m.\e[0m"
-sleep 0.01
-echo -en "\e[1;31m.\e[0m"
-sleep 0.01
-echo -en "\e[1;31m.\e[0m"
-sleep 0.01
-echo -en "\e[1;31m.\e[0m"
-sleep 0.1
+# Print a goodbye message: a magenta arrow trailed by red dots that fill the
+# terminal width, drawn left-to-right and held briefly once complete.
+#
+# Sourced from the EXIT trap in .bashrc, so the body lives in a function that
+# is unset afterwards -- nothing leaks into the namespace of the exiting shell.
+
+function _bash_goodbye_message() {
+  # Nothing to animate when stdout is redirected to a file or a pipe
+  [ -t 1 ] || return 0
+
+  # Time spent drawing the line, and how long the finished line is held on
+  # screen before the shell goes away (milliseconds).
+  #
+  # One dot per frame keeps the steps uniform, so the draw can be this quick
+  # without looking stepped: at 60Hz a full-width sweep still lands several
+  # dots per refresh, and anything faster than the refresh is invisible anyway
+  local draw_ms=200 pause_ms=150
+
+  local cols dots frames fd smooth=0 delay us i target shown=0 pad discard
+
+  # Terminal width, falling back to tput and then to a sane default. Only a
+  # missing or non-numeric value triggers the fallback -- a small but valid
+  # width is honoured, so a narrow terminal stays unwrapped
+  cols=${COLUMNS:-0}
+  [[ $cols =~ ^[0-9]+$ ]] && ((cols > 0)) || cols=$(tput cols 2>/dev/null)
+  [[ $cols =~ ^[0-9]+$ ]] && ((cols > 0)) || cols=80
+
+  # The arrow plus two spaces occupies 3 columns; dots take the rest
+  dots=$((cols - 3))
+  ((dots > 0)) || return 0
+
+  # A fork-free delay: a pipe held open read-write never becomes readable, so
+  # read(1) just waits out its timeout as a builtin. That buys one dot per
+  # frame. Without it each frame costs a fork, so the frame count stays low
+  # and the line is drawn in visible chunks instead
+  # (the braces keep the stderr redirect scoped to the exec -- applying it to
+  # exec directly would silence the calling shell's stderr for good)
+  if [[ -d /dev/fd ]] && { exec {fd}<> <(:); } 2>/dev/null; then
+    smooth=1
+    frames=$dots
+    ((frames > 240)) && frames=240
+  else
+    frames=28
+    ((frames > dots)) && frames=$dots
+  fi
+
+  # Per-frame delay in seconds, to microsecond precision (bash has no floats).
+  # read(1) costs ~200us per call on top of its timeout, so discount that or
+  # the draw overruns its budget on wide terminals, where frames are many
+  us=$((draw_ms * 1000 / frames))
+  ((smooth)) && us=$((us - 200))
+  ((us < 100)) && us=100
+  printf -v delay '%d.%06d' "$((us / 1000000))" "$((us % 1000000))"
+
+  printf '\e[1;35m➜\e[0m  \e[1;31m'
+
+  for ((i = 1; i <= frames; i++)); do
+    target=$((dots * i / frames))
+    if ((target > shown)); then
+      printf -v pad '%*s' "$((target - shown))" ''
+      printf '%s' "${pad// /.}"
+      shown=$target
+    fi
+    if ((smooth)); then
+      read -rt "$delay" -u "$fd" discard
+    else
+      sleep "$delay"
+    fi
+  done
+
+  printf '\e[0m'
+
+  # Hold the completed line
+  us=$((pause_ms * 1000))
+  printf -v delay '%d.%06d' "$((us / 1000000))" "$((us % 1000000))"
+  if ((smooth)); then
+    read -rt "$delay" -u "$fd" discard
+    exec {fd}>&-
+  else
+    sleep "$delay"
+  fi
+}
+
+_bash_goodbye_message
+unset -f _bash_goodbye_message
