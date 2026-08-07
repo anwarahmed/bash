@@ -24,7 +24,7 @@ export HISTTIMEFORMAT='%F %T - '             # History format
 export HISTFILE=~/.config/bash/.bash_history # History file
 
 # Goodbye message
-trap 'source ~/.config/bash/.bash_goodbye_message' EXIT
+trap '[ -f ~/.config/bash/.bash_goodbye_message ] && source ~/.config/bash/.bash_goodbye_message' EXIT
 
 # Welcome message (clear the screen and print date, time, and cwd)
 cli
