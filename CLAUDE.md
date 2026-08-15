@@ -22,14 +22,15 @@ Only three files are symlinked into `$HOME` (see `README.md`):
 
 `.bash_profile` → `.bashrc` (preferring the repo copy over `~/.bashrc`) → then, inside `.bashrc`:
 
-1. Interactive guard: `[[ $- != *i* ]] && return` — **must stay the first statement**. Everything below it (aliases, the `cli` screen clear, the EXIT trap) breaks scp/rsync/non-interactive ssh if it runs unguarded.
-2. `source ~/.local/share/omarchy/default/bash/rc` — the Omarchy base layer, which pulls in its own envs, shell opts, aliases, functions, init (mise, starship, zoxide, fzf), and inputrc.
-3. Local overrides: PATH, `.bash_aliases`, `.bash_functions`, NVM, history settings.
-4. `trap ... EXIT` for the goodbye message, then `cli` as the last line.
+1. `source /usr/share/omarchy/default/bash/env-bootstrap` — sets `OMARCHY_PATH` and appends the mise-shims / `~/.local/bin` PATH entries. This is the **one** thing that belongs *above* the interactive guard, matching `/etc/skel/.bashrc`: non-interactive shells (`ssh box 'cmd'`, herdr's remote bridge) return before the guard and would otherwise get neither. It only assigns variables and prints nothing, so scp/rsync stay safe.
+2. Interactive guard: `[[ $- != *i* ]] && return` — **must stay above the rc source**, and nothing but env assignment may precede it. Everything below it (aliases, the `cli` screen clear, the EXIT trap) breaks scp/rsync/non-interactive ssh if it runs unguarded.
+3. `source "${OMARCHY_PATH:-/usr/share/omarchy}/default/bash/rc"` — the Omarchy base layer, which pulls in its own envs, shell opts, aliases, functions, init (mise, starship, zoxide, fzf), and inputrc. Go through `$OMARCHY_PATH`, never a hardcoded path: it is what `omarchy-dev-link` repoints, and `~/.local/share/omarchy` is only a symlink to the real `/usr/share/omarchy`.
+4. Local overrides: PATH, `.bash_aliases`, `.bash_functions`, NVM, history settings.
+5. `trap ... EXIT` for the goodbye message, then `cli` as the last line.
 
 Two ordering rules fall out of this:
 
-- **Never edit `~/.local/share/omarchy/default/bash/*`.** It is upstream-managed and gets overwritten by Omarchy updates. Override it here instead, after the `source` on line 8 — that is the whole reason the base layer is sourced first.
+- **Never edit `$OMARCHY_PATH/default/bash/*`.** It is upstream-managed and gets overwritten by Omarchy updates. Override it here instead, after the rc `source` — that is the whole reason the base layer is sourced first. This includes `env-bootstrap`: prefer sourcing it over reimplementing its `OMARCHY_PATH`/`/etc/omarchy.conf` logic inline, so the dev-link behaviour keeps tracking upstream.
 - **`cli` clears the screen at the end of `.bashrc`.** Anything printed by earlier lines is wiped. Put new output *after* the `cli` call, or it will never be seen.
 
 ## History
