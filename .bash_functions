@@ -36,6 +36,27 @@ function git_checkout_main_or_master() {
   fi
 }
 
+# git-clone-bare <repository_url> [folder]
+# Clones a bare copy of a repository, then configures it to fetch all
+# remote branches (a bare clone otherwise only tracks the branch it was
+# cloned on).
+#
+# Arguments:
+#   $1 - repository URL (required)
+#   $2 - destination folder (optional; defaults to the repo name without ".git")
+function git-clone-bare() {
+  local repo="$1"
+  local folder="${2:-$(basename "$repo" .git)}"
+
+  if [ -z "$repo" ]; then
+    echo "Usage: git-clone-bare <repository_url> [folder]"
+    return 1
+  fi
+
+  git clone --bare "$repo" "$folder" || return 1
+  git -C "$folder" config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+}
+
 # clear-system-cache
 # Frees up disk space by purging package caches and orphaned packages,
 # clearing the user cache directory, then listing Snapper snapshots.
