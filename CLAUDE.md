@@ -26,7 +26,7 @@ Only three files are symlinked into `$HOME` (see `README.md`):
 2. Interactive guard: `[[ $- != *i* ]] && return` — **must stay above the rc source**, and nothing but env assignment may precede it. Everything below it (aliases, the `cli` screen clear, the EXIT trap) breaks scp/rsync/non-interactive ssh if it runs unguarded.
 3. `source "${OMARCHY_PATH:-/usr/share/omarchy}/default/bash/rc"` — the Omarchy base layer, which pulls in its own envs, shell opts, aliases, functions, init (mise, starship, zoxide, fzf), and inputrc. Go through `$OMARCHY_PATH`, never a hardcoded path: it is what `omarchy-dev-link` repoints, and `~/.local/share/omarchy` is only a symlink to the real `/usr/share/omarchy`.
 4. Local overrides: PATH, `.bash_aliases`, `.bash_functions`, NVM, history settings.
-5. User-local `custom/*.sh`, sourced alphabetically so they override everything above. The folder's contents are gitignored except `custom/README.md` (the user-facing instructions) — never commit other files from it.
+5. User-local `custom/*.sh`, sourced alphabetically so they override everything above. The folder's contents are gitignored except `custom/README.md` (the user-facing instructions) and `custom/example.sh.sample` (a starter file, not loaded because it doesn't end in `.sh`) — never commit other files from it.
 6. `trap ... EXIT` for the goodbye message, then `cli` as the last line.
 
 Two ordering rules fall out of this:

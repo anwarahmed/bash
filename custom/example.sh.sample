@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Example custom file. Copy it to a name ending in .sh to activate it:
+#   cp ~/.config/bash/custom/example.sh.sample ~/.config/bash/custom/example.sh
+# See README.md in this folder for how custom files are loaded.
+
+# Aliases
+alias myip='curl -s https://ifconfig.me; echo' # Show your public IP address
