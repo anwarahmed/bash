@@ -4,6 +4,7 @@
 # Bash history file
 .bash_history
 
-# User-defined custom files (only the instructions are tracked)
+# User-defined custom files (only the instructions and sample are tracked)
 custom/*
 !custom/README.md
+!custom/example.sh.sample

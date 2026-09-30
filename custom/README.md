@@ -6,6 +6,15 @@ files stay local to this machine and never conflict with updates to the repo.
 
 ## Adding your own
 
+The quickest start is to copy the sample file, which defines an example
+alias, and edit it:
+
+```bash
+cp ~/.config/bash/custom/example.sh.sample ~/.config/bash/custom/example.sh
+```
+
+Or from scratch:
+
 1. Create a file in this folder whose name ends in `.sh`, e.g.
    `~/.config/bash/custom/work.sh`. Split things across as many files as you
    like — group them by topic (`git.sh`, `docker.sh`, `work.sh`, ...).
@@ -37,7 +46,8 @@ can override an existing alias or function of the same name. If one file
 depends on another, prefix names to control the order (`10-base.sh`,
 `20-work.sh`).
 
-Files that do not end in `.sh` (like this README) are ignored.
+Files that do not end in `.sh` (like this README and `example.sh.sample`) are
+ignored.
 
 ## Tips
 
