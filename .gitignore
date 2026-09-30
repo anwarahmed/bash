@@ -3,3 +3,7 @@
 
 # Bash history file
 .bash_history
+
+# User-defined custom files (only the instructions are tracked)
+custom/*
+!custom/README.md
