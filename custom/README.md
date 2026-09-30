@@ -1,8 +1,9 @@
 # Custom functions and aliases
 
 This folder is for your own functions and aliases that are **not** maintained
-by this repo. Everything in here except this README is gitignored, so your
-files stay local to this machine and never conflict with updates to the repo.
+by this repo. Everything in here except this README and `example.sh.sample`
+is gitignored, so your files stay local to this machine and never conflict
+with updates to the repo.
 
 ## Adding your own
 
