@@ -26,6 +26,12 @@ source ~/.config/bash/.bash_functions
 export HISTTIMEFORMAT='%F %T - '             # History format
 export HISTFILE=~/.config/bash/.bash_history # History file
 
+# User-defined functions and aliases (not maintained by this repo; see custom/README.md)
+for f in ~/.config/bash/custom/*.sh; do
+  [ -r "$f" ] && source "$f"
+done
+unset f
+
 # Goodbye message
 trap '[ -f ~/.config/bash/.bash_goodbye_message ] && source ~/.config/bash/.bash_goodbye_message' EXIT
 

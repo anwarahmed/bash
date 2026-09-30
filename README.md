@@ -26,3 +26,7 @@ ln -s ~/.config/bash/.bashrc ~/.bashrc
 ln -s ~/.config/bash/.bash_profile ~/.bash_profile
 ln -s ~/.config/bash/.bash_logout ~/.bash_logout
 ```
+
+## Custom functions and aliases
+
+Put your own functions and aliases in `~/.config/bash/custom/*.sh`. They are loaded automatically and are not tracked by this repo. See [`custom/README.md`](custom/README.md) for details.
